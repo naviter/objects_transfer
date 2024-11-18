@@ -4,7 +4,7 @@ publish_to: 'none'
 version: 0.1.0
 
 environment:
-  sdk: '>=3.4.4 <4.0.0'
+  sdk: '>=3.4.3 <4.0.0'
 
 dependencies:
   flutter:
@@ -15,6 +15,16 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
+
+dependency_overrides:
+  flutter_background_service:
+    path: flutter_background_service/packages/flutter_background_service
+  flutter_background_service_android:
+    path: flutter_background_service/packages/flutter_background_service_android
+  flutter_background_service_ios:
+    path: flutter_background_service/packages/flutter_background_service_ios
+  flutter_background_service_platform_interface:
+    path: flutter_background_service/packages/flutter_background_service_platform_interface
 
 flutter:
   uses-material-design: true
