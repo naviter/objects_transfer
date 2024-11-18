@@ -14,15 +14,18 @@ void onStart(ServiceInstance service) async {
     print("background process is now stopped");
   });
 
-  service.on("command").listen((_) {
+  service.on("command_text").listen((_) {
     //* Experiment with this
-    // final message = "Service -> UI command"; 
-    final message = MyClass(123); 
-
-    final uiSendPort = IsolateNameServer.lookupPortByName("ui");
-    uiSendPort?.send(message);
+    final message = "Service -> UI command";
+    IsolateNameServer.lookupPortByName("ui")?.send(message);
   });
-  
+
+  service.on("command_object").listen((_) {
+    //* Experiment with this
+    final message = MyClass(123);
+    IsolateNameServer.lookupPortByName("ui")?.send(message);
+  });
+
   print("Service started");
 
   // Custom communication
@@ -33,7 +36,7 @@ void onStart(ServiceInstance service) async {
     print("🔶 Received message '$message' in service");
   });
 
-  Timer.periodic(const Duration(seconds: 1), (timer) {
+  Timer.periodic(const Duration(seconds: 10), (timer) {
     print("Keepalive in foreground service: ${DateTime.now()}");
   });
 }

@@ -76,20 +76,26 @@ class MainApp extends StatelessWidget {
               SizedBox(height: 16),
 
               FilledButton(
-                onPressed: ()=> FlutterBackgroundService().invoke("command"),
-                child: Text("Execute command in service"),
+                onPressed: ()=> FlutterBackgroundService().invoke("command_text"),
+                child: Text("Send text from service"),
+              ),
+              SizedBox(height: 16),
+
+              FilledButton(
+                onPressed: ()=> FlutterBackgroundService().invoke("command_object"),
+                child: Text("Send object from service"),
+              ),
+              SizedBox(height: 16),
+
+              FilledButton(
+                onPressed: () => send("TEXT"),
+                child: Text("Send text to service"),
               ),
               SizedBox(height: 16),
 
               FilledButton(
                 onPressed: () => send(MyClass(123)),
-                child: Text("Send text to port"),
-              ),
-              SizedBox(height: 16),
-
-              FilledButton(
-                onPressed: () => send(MyClass(123)),
-                child: Text("Send object to port"),
+                child: Text("Send object to service"),
               ),
             ],
           ),
