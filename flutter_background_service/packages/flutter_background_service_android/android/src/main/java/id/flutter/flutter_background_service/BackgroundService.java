@@ -37,14 +37,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import io.flutter.FlutterInjector;
 import io.flutter.embedding.engine.FlutterEngine;
 import io.flutter.embedding.engine.FlutterEngineGroup;
+import io.flutter.embedding.engine.FlutterEngineGroupCache;
 import io.flutter.embedding.engine.dart.DartExecutor;
 import io.flutter.embedding.engine.loader.FlutterLoader;
 import io.flutter.plugin.common.JSONMethodCodec;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.PluginRegistry;
-
-import id.flutter.flutter_background_service.FlutterEngineGroupSingleton;
 
 public class BackgroundService extends Service implements MethodChannel.MethodCallHandler {
     private static final String TAG = "BackgroundService";
@@ -214,12 +213,17 @@ public class BackgroundService extends Service implements MethodChannel.MethodCa
 
             isRunning.set(true);
             //backgroundEngine = new FlutterEngine(this);
-            FlutterEngineGroupSingleton.initialize(this);
+            FlutterEngineGroupCache engineGroupCache = FlutterEngineGroupCache.getInstance();
+            FlutterEngineGroup engineGroup = engineGroupCache.get("main");
+            if (engineGroup == null) {
+                engineGroup = new FlutterEngineGroup(getApplicationContext());
+                engineGroupCache.put("main", engineGroup);
+            }
             dartEntrypoint = new DartExecutor.DartEntrypoint(flutterLoader.findAppBundlePath(), "package:flutter_background_service_android/flutter_background_service_android.dart", "entrypoint");
             final List<String> args = new ArrayList<>();
             long backgroundHandle = config.getBackgroundHandle();
             args.add(String.valueOf(backgroundHandle));
-            backgroundEngine = FlutterEngineGroupSingleton.getInstance().createAndRunEngine(
+            backgroundEngine = engineGroup.createAndRunEngine(
                 new FlutterEngineGroup.Options(this)
                 .setDartEntrypoint(dartEntrypoint)
                 .setDartEntrypointArgs(args)

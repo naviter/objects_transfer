@@ -6,7 +6,7 @@ import android.util.Log;
 import io.flutter.embedding.android.FlutterActivity;
 import io.flutter.embedding.engine.FlutterEngine;
 import io.flutter.embedding.engine.FlutterEngineGroup;
-import id.flutter.flutter_background_service.FlutterEngineGroupSingleton;
+import io.flutter.embedding.engine.FlutterEngineGroupCache;
 
 public class MainActivity extends FlutterActivity {
     private FlutterEngine flutterEngine;
@@ -19,9 +19,13 @@ public class MainActivity extends FlutterActivity {
     @Override
     public FlutterEngine provideFlutterEngine(Context context) {
         if (flutterEngine == null) {
-            FlutterEngineGroupSingleton.initialize(this);
-            FlutterEngineGroup flutterEngineGroup = FlutterEngineGroupSingleton.getInstance();
-            flutterEngine = flutterEngineGroup.createAndRunDefaultEngine(this);
+            FlutterEngineGroupCache engineGroupCache = FlutterEngineGroupCache.getInstance();
+            FlutterEngineGroup engineGroup = engineGroupCache.get("main");
+            if (engineGroup == null) {
+                engineGroup = new FlutterEngineGroup(context);
+                engineGroupCache.put("main", engineGroup);
+            }
+            flutterEngine = engineGroup.createAndRunDefaultEngine(this);
         }
         return flutterEngine;
     }
