@@ -178,8 +178,8 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
         NSString *handleString = [NSString stringWithFormat:@"%lld", handle];
         NSArray *args = @[handleString];
         FlutterEngineGroupOptions* options = [[FlutterEngineGroupOptions alloc] init];
-        options.entrypoint = @"entrypoint";
-        options.libraryURI = @"package:background_locator_2/background_locator.dart";
+        options.entrypoint = entrypoint;
+        options.libraryURI = uri;
         options.initialRoute = nil;
         options.entrypointArgs = args;
         _headlessRunner = [engineGroup makeEngineWithOptions:options];
