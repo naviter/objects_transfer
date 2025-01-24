@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'background_locator_channel.dart';
 import 'channel.dart';
@@ -17,13 +18,22 @@ Future<void> main() async {
 
 
   //! CHANGE CHANNEL AND BEHAVIOR HERE
-  // const behavior = PortExchangeBehavior.isolateNameServer;
-  const behavior = PortExchangeBehavior.directExchange;
+  const behavior = PortExchangeBehavior.isolateNameServer;
+  // const behavior = PortExchangeBehavior.directExchange;
 
   final channel = IsolateChannel(behavior);
   // final channel = FlutterIsolateChannel(behavior);
   // final channel = FlutterBackgroundServiceChannel();
   // final channel = BackgroundLocatorChannel();
+
+
+
+  Timer.run(() async {
+    while(true) {
+      await delay(200);
+      delaySync(200);
+    }
+  });
 
   await channel.init();
   runApp(MainApp(channel));
@@ -41,17 +51,16 @@ class MainApp extends StatelessWidget {
       home: Scaffold(
         body: Center(
           child: Column(
+            spacing: 16,
             mainAxisSize: MainAxisSize.min,
             children: [
               Text('Objects transfer demonstrator'),
-              SizedBox(height: 16),
 
               //* Text
               FilledButton(
                 onPressed: () => channel.send("PING"),
                 child: Text("Send text"),
               ),
-              SizedBox(height: 16),
 
               //* Object
               FilledButton(

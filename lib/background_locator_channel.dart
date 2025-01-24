@@ -18,7 +18,7 @@ class BackgroundLocatorChannel extends Channel {
       _locationUpdateCallback,
       initCallback: isolateEntryPoint,
       androidSettings: const AndroidSettings(
-        client: LocationClient.android,
+        client: LocationClient.google,
         androidNotificationSettings: AndroidNotificationSettings(
           notificationTitle: "SeeYou Navigator",
           notificationMsg: "SeeYou Navigator is running",

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:isolate';
 import 'dart:ui';
 
@@ -34,4 +35,13 @@ void isolateEntryPoint(dynamic parameter) {
     case PortExchangeBehavior.directExchange: sendBack(receivePort.sendPort);
     case PortExchangeBehavior.isolateNameServer: IsolateNameServer.registerPortWithName(receivePort.sendPort, "isolate");
   }
+
+  DateTime last = DateTime.now();
+
+  Timer.periodic(const Duration(milliseconds: 100), (_){
+    final now = DateTime.now();
+    final duration = now.difference(last);
+    print("${DateTime.now().toIso8601String()}, ${duration.inMilliseconds}ms");
+    last = now;
+  });
 }
