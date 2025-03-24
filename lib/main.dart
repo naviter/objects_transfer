@@ -18,6 +18,8 @@ Future<void> main() async {
 
   uiReceivePort.listen((message) async {
     print("🔷 Received message '$message' in UI");
+
+    print("TESTING 123");
   });
 
   await initializeService();
