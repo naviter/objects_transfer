@@ -1,20 +1,46 @@
+name: Automated Code Review by Cody
+
 on:
   pull_request:
     types: [opened, reopened]
 
 jobs:
-  code_review_job:
+  code_review:
     runs-on: ubuntu-latest
-    name: ChatGPT Code Review
     steps:
-      - name: GenAI Code Review
-        uses: dlidstrom/genai-code-review@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Clone cody-code-reviewer repository
+        run: |
+          git clone https://github.com/codylabs/cody-code-reviewer.git
+          cd cody-code-reviewer
+
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v4
         with:
-          openai_api_key: ${{ secrets.openai_api_key }}
-          github_token: ${{ secrets.GH_TOKEN }}
-          github_pr_id: ${{ github.event.number }}
-          openai_model: "gpt-3.5-turbo" # optional
-          openai_temperature: 0.5 # optional
-          openai_max_tokens: 2048 # optional
-          mode: files # files or patch
-          # custom_prompt: "" # optional
+          python-version: "3.9"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Code Review Model
+        run: |
+          python src/review_pull_request.py ${{ github.event.pull_request.number }} ${{ github.repository }} > ${{ github.workspace }}/output.txt
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          # Optional: update to a model of your choice from https://platform.openai.com/docs/models
+          OPENAI_MODEL: "gpt-4o"
+
+      - name: Comment on Pull Request
+        run: |
+          python src/comment_on_pr.py ${{ github.event.pull_request.number }} "${{ secrets.GH_TOKEN }}" ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+permissions:
+  contents: read
+  pull-requests: write
