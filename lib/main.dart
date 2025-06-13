@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:mapbox_gl/mapbox_gl.dart';
 
 import 'background_locator_channel.dart';
 import 'channel.dart';
@@ -58,10 +59,33 @@ class MainApp extends StatelessWidget {
                 onPressed: () => channel.send(MyClass()),
                 child: Text("Send object"),
               ),
+              SizedBox(height: 16),
+
+              SizedBox(
+                height: 200,
+                child: MapView(),
+              ),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class MapView extends StatefulWidget {
+  const MapView({super.key});
+
+  @override
+  State<MapView> createState() => _MapViewState();
+}
+
+class _MapViewState extends State<MapView> {
+  @override
+  Widget build(BuildContext context) {
+    return MapboxMap(
+      initialCameraPosition: CameraPosition(target: LatLng(46.233487, 14.363610)),
+      accessToken: "pk.eyJ1Ijoic2ltb25lc2N1IiwiYSI6IjRkN2U4ZmY0ZjVlNDBhNGNiMmQ4NjMwNjY5ZGU1OGNmIn0.LkkSQmTDSrt58H_Jtd6OZQ",
     );
   }
 }

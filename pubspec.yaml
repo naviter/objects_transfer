@@ -14,6 +14,10 @@ dependencies:
   flutter_background_service:
   flutter_isolate:
   # permission_handler:
+  mapbox_gl:
+    git:
+      url: https://github.com/naviter/flutter_mapbox_gl.git
+      ref: ebe3751026cfef18268589256950d6954b0e4faf
 
 dev_dependencies:
   flutter_test:
@@ -33,6 +37,16 @@ dependency_overrides:
     path: flutter_background_service/packages/flutter_background_service_platform_interface
   flutter_isolate:
     path: flutter_isolate
+  mapbox_gl_platform_interface:
+    git:
+      url: https://github.com/naviter/flutter_mapbox_gl.git
+      ref: ebe3751026cfef18268589256950d6954b0e4faf
+      path: mapbox_gl_platform_interface
+  mapbox_gl_web:
+    git:
+      url: https://github.com/naviter/flutter_mapbox_gl.git
+      ref: ebe3751026cfef18268589256950d6954b0e4faf
+      path: mapbox_gl_web
 
 flutter:
   uses-material-design: true
