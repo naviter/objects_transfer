@@ -3,7 +3,6 @@ import 'package:background_locator_2/location_dto.dart';
 import 'package:background_locator_2/settings/android_settings.dart';
 import 'package:background_locator_2/settings/ios_settings.dart';
 import 'package:background_locator_2/settings/locator_settings.dart';
-import 'package:location_permissions/location_permissions.dart';
 
 import 'channel.dart';
 import 'isolate_entry_point.dart';
@@ -36,14 +35,15 @@ class BackgroundLocatorChannel extends Channel {
   }
 
   Future<bool> checkLocationPermission() async {
-    final access = await LocationPermissions().checkPermissionStatus(level: LocationPermissionLevel.locationAlways);
-    return switch (access) {
-      PermissionStatus.granted => true,
+    return true;
+    // final access = await LocationPermissions().checkPermissionStatus(level: LocationPermissionLevel.locationAlways);
+    // return switch (access) {
+    //   PermissionStatus.granted => true,
 
-      PermissionStatus.unknown ||
-      PermissionStatus.denied ||
-      PermissionStatus.restricted => await LocationPermissions().requestPermissions(permissionLevel: LocationPermissionLevel.locationAlways) == PermissionStatus.granted,
-    };
+    //   PermissionStatus.unknown ||
+    //   PermissionStatus.denied ||
+    //   PermissionStatus.restricted => await LocationPermissions().requestPermissions(permissionLevel: LocationPermissionLevel.locationAlways) == PermissionStatus.granted,
+    // };
   }
 }
 

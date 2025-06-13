@@ -18,12 +18,12 @@ Future<void> main() async {
 
   //! CHANGE CHANNEL AND BEHAVIOR HERE
   // const behavior = PortExchangeBehavior.isolateNameServer;
-  const behavior = PortExchangeBehavior.directExchange;
+  // const behavior = PortExchangeBehavior.directExchange;
 
-  final channel = IsolateChannel(behavior);
+  // final channel = IsolateChannel(behavior);
   // final channel = FlutterIsolateChannel(behavior);
   // final channel = FlutterBackgroundServiceChannel();
-  // final channel = BackgroundLocatorChannel();
+  final channel = BackgroundLocatorChannel();
 
   await channel.init();
   runApp(MainApp(channel));

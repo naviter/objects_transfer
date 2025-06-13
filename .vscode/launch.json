@@ -10,5 +10,12 @@
             "request": "launch",
             "program": "${workspaceFolder}/lib/main.dart"
          },
+        {
+         "name": "Profile Objects Transfer",
+         "type": "dart",
+         "request": "launch",
+         "flutterMode": "profile",
+         "program": "${workspaceFolder}/lib/main.dart"
+        },
     ]
 }

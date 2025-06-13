@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:objects_transfer/channel.dart';
 
+import 'battery_service.dart';
 import 'my_class.dart';
 
 void isolateEntryPoint(dynamic parameter) {
@@ -34,4 +35,6 @@ void isolateEntryPoint(dynamic parameter) {
     case PortExchangeBehavior.directExchange: sendBack(receivePort.sendPort);
     case PortExchangeBehavior.isolateNameServer: IsolateNameServer.registerPortWithName(receivePort.sendPort, "isolate");
   }
+
+  BatteryService();
 }

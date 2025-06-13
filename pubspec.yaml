@@ -10,9 +10,10 @@ dependencies:
   flutter:
     sdk: flutter
   background_locator_2:
+  battery_info_plugin:
   flutter_background_service:
   flutter_isolate:
-  location_permissions:
+  # permission_handler:
 
 dev_dependencies:
   flutter_test:
